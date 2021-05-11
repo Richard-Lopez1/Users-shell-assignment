@@ -1,0 +1,54 @@
+To challenge myself a bit I created 4 movies with the following attributes:
+title = models.CharField(max_length=45)
+director = models.CharField(max_length=255)
+release_date = models.DateField()
+duration = models.IntegerField()
+created_at = models.DateTimeField(auto_now_add=True)
+updated_at = models.DateTimeField(auto_now=True)
+
+I ran queries with slight modification as follows:
+
+Query: Create 4 movies
+>>> first_movie = Movie.objects.create(title="Full_Metal_Jacket", director="Stanley_Kubrick", release_date="1987-09-25", duration=98)
+>>> second_movie = Movie.objects.create(title="Back_to_school", director="Allen_Metter", release_date="2001-09-25", duration=89)
+>>> third_movie = Movie.objects.create(title="Good_Fellas", director="Martin_Scorsese", release_date="1990-09-09", duration=99)
+>>> Movie.objects.create(title="Forest_Gump", director="Robert_Zemeckis", release_date="2014-05-30", duration=99)
+<Movie: Movie object (4)>
+
+Query: Retrieve all the movies:
+>>> Movie.objects.all()
+<QuerySet [<Movie: Movie object (1)>, <Movie: Movie object (2)>, <Movie: Movie object (3)>, <Movie: Movie object (4)>]>
+
+Query: Retrieve the last movie
+>>> Movie.objects.last()
+<Movie: Movie object (4)>
+
+Query: Retrieve the first movie
+>>> Movie.objects.first()
+<Movie: Movie object (1)>
+
+Query: Change the director with id=3 so the director name is "Zemeckis updated".
+>>> director_to_update.director
+'Robert_Zemeckis'
+>>> director_to_update.director = 'Zemeckis updated'
+>>> director_to_update.save()
+>>> director_to_update.director
+'Zemeckis updated'
+
+Query: Delete the movie with id=2 from the database
+>>> movie_to_delete = Movie.objects.get(id=2)
+>>> movie_to_delete.delete()
+(1, {'users_app.Movie': 1})
+>>> movie_to_delete
+<Movie: Movie object (2)>
+The following was run to show the movie with ID=2 is gone...
+>>> Movie.objects.all()
+<QuerySet [<Movie: Movie object (1)>, <Movie: Movie object (3)>, <Movie: Movie object (4)>]>
+
+
+Query: Get all the movies with title 'Forest_Gump'
+>>> movies_with_title_forest_gump = Movie.objects.filter(title='Forest_Gump')
+>>> movies_with_title_forest_gump
+<QuerySet [<Movie: Movie object (4)>]>
+
+
